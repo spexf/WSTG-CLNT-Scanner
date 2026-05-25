@@ -5,6 +5,19 @@ import subprocess
 import re
 import json
 
+def get_user_auth():
+    json_payload = json.dumps({
+
+    "phone_number": "xxxxx",
+    "password": "xxxxx"
+    })
+
+    command = [
+        'curl', '-X','POST','https://xxxxxx/api/v1/auth/login-customer','-k','-H','Content-Type: application/json','-d',json_payload]
+    proc = subprocess.run(command, capture_output=True, check=True, text=True)
+    process_output = json.loads(proc.stdout.encode('utf-8'))
+    return process_output['token']
+
 def read_file(filepath):
     """Membaca file dan mengembalikan daftar URL di dalamnya."""
     if not os.path.isfile(filepath):
